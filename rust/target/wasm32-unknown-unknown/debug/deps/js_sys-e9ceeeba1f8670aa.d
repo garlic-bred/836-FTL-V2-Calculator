@@ -1,0 +1,10 @@
+/Users/nathan/Documents/Minecraft/836-FTL-V2-calculator-python/rust/target/wasm32-unknown-unknown/debug/deps/js_sys-e9ceeeba1f8670aa.d: /Users/nathan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.97/src/lib.rs /Users/nathan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.97/src/futures/mod.rs /Users/nathan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.97/src/futures/queue.rs /Users/nathan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.97/src/futures/task/singlethread.rs
+
+/Users/nathan/Documents/Minecraft/836-FTL-V2-calculator-python/rust/target/wasm32-unknown-unknown/debug/deps/libjs_sys-e9ceeeba1f8670aa.rlib: /Users/nathan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.97/src/lib.rs /Users/nathan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.97/src/futures/mod.rs /Users/nathan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.97/src/futures/queue.rs /Users/nathan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.97/src/futures/task/singlethread.rs
+
+/Users/nathan/Documents/Minecraft/836-FTL-V2-calculator-python/rust/target/wasm32-unknown-unknown/debug/deps/libjs_sys-e9ceeeba1f8670aa.rmeta: /Users/nathan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.97/src/lib.rs /Users/nathan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.97/src/futures/mod.rs /Users/nathan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.97/src/futures/queue.rs /Users/nathan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.97/src/futures/task/singlethread.rs
+
+/Users/nathan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.97/src/lib.rs:
+/Users/nathan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.97/src/futures/mod.rs:
+/Users/nathan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.97/src/futures/queue.rs:
+/Users/nathan/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/js-sys-0.3.97/src/futures/task/singlethread.rs:

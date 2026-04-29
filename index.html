@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>836 FTL v2 Calculator</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<h1>836 FTL v2 Calculator</h1>
+
+<!-- Tab bar -->
+<div class="tabs">
+  <button class="tab-btn active" data-tab="calc">Calculate TNT</button>
+  <button class="tab-btn"        data-tab="sim">Pearl Simulate</button>
+  <button class="tab-btn"        data-tab="enc">TNT Encoding</button>
+</div>
+
+<!-- ── Calculate TNT tab ──────────────────────────────────────────────────── -->
+<div id="tab-calc" class="tab-panel active">
+
+  <div class="grid-2 mb-12">
+
+    <!-- Cannon Information -->
+    <div class="section">
+      <span class="section-title">Cannon Information</span>
+      <div class="form-row">
+        <label>Pearl X</label>
+        <input type="number" id="pearl-x" value="0.51" step="any">
+      </div>
+      <div class="form-row">
+        <label>Pearl Z</label>
+        <input type="number" id="pearl-z" value="0.51" step="any">
+      </div>
+    </div>
+
+    <!-- Restrictions -->
+    <div class="section">
+      <span class="section-title">Restrictions</span>
+      <div class="form-row">
+        <label>Max TNT</label>
+        <input type="number" id="max-tnt" value="6688" step="1">
+      </div>
+      <div class="form-row">
+        <label>Max Ticks</label>
+        <input type="number" id="max-ticks" value="500" step="1">
+      </div>
+      <div class="form-row">
+        <label>Max Distance</label>
+        <input type="number" id="max-distance" value="50" step="any">
+      </div>
+    </div>
+
+    <!-- Destination -->
+    <div class="section">
+      <span class="section-title">Destination</span>
+      <div class="form-row">
+        <label>X</label>
+        <input type="number" id="dest-x" value="" step="any" placeholder="required">
+      </div>
+      <div class="form-row">
+        <label>Z</label>
+        <input type="number" id="dest-z" value="" step="any" placeholder="required">
+      </div>
+    </div>
+
+    <!-- Calculate button -->
+    <div style="display:flex;align-items:center;justify-content:center;">
+      <button class="btn" id="btn-calculate">Calculate</button>
+    </div>
+
+  </div>
+
+  <div id="calc-status" class="status"></div>
+
+  <!-- Results table -->
+  <div class="table-wrap">
+    <div class="scrollable-table">
+      <table id="results-table">
+        <thead>
+          <tr>
+            <th>Distance</th>
+            <th>Position</th>
+            <th>Ticks</th>
+            <th>Early</th>
+            <th>Late</th>
+            <th>Total TNT</th>
+          </tr>
+        </thead>
+        <tbody id="results-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ── Pearl Simulate tab ──────────────────────────────────────────────────── -->
+<div id="tab-sim" class="tab-panel">
+
+  <div class="grid-3 mb-12">
+
+    <!-- Starting Position -->
+    <div class="section">
+      <span class="section-title">Starting Position</span>
+      <div class="form-row">
+        <label>X</label>
+        <input type="number" id="sim-pos-x" step="any">
+      </div>
+      <div class="form-row">
+        <label>Y</label>
+        <input type="number" id="sim-pos-y" step="any">
+      </div>
+      <div class="form-row">
+        <label>Z</label>
+        <input type="number" id="sim-pos-z" step="any">
+      </div>
+    </div>
+
+    <!-- Starting Motion -->
+    <div class="section">
+      <span class="section-title">Starting Motion</span>
+      <div class="form-row">
+        <label>X</label>
+        <input type="number" id="sim-mot-x" step="any">
+      </div>
+      <div class="form-row">
+        <label>Y</label>
+        <input type="number" id="sim-mot-y" step="any">
+      </div>
+      <div class="form-row">
+        <label>Z</label>
+        <input type="number" id="sim-mot-z" step="any">
+      </div>
+    </div>
+
+    <!-- Simulate button -->
+    <div class="btn-cell">
+      <button class="btn" id="btn-simulate">Simulate</button>
+    </div>
+
+  </div>
+
+  <div id="sim-status" class="status"></div>
+
+  <!-- Sim table -->
+  <div class="table-wrap">
+    <div class="scrollable-table">
+      <table id="sim-table">
+        <thead>
+          <tr>
+            <th>Tick</th>
+            <th>Position</th>
+            <th>Motion</th>
+          </tr>
+        </thead>
+        <tbody id="sim-body"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div id="tp-output" class="status" style="margin-top:10px;font-family:var(--font-mono);font-size:12px;"></div>
+
+</div>
+
+<!-- ── TNT Encoding tab ──────────────────────────────────────────────────── -->
+<div id="tab-enc" class="tab-panel">
+  <div style="display:flex;justify-content:center;padding-top:8px;">
+    <div style="width:100%;max-width:400px;">
+      <div id="encoding-placeholder" class="status">Select a result in the Calculate TNT tab to see its encoding.</div>
+      <div id="encoding-container" style="display:none;">
+        <div class="section mb-12">
+          <span class="section-title">Encoding</span>
+          <div id="encoding-rows"></div>
+        </div>
+        <div class="section" id="encoding-block-section">
+          <span class="section-title">Block Placement</span>
+          <div id="encoding-block-row"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="app.js"></script>
+</body>
+</html>
