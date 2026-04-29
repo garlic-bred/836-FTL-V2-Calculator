@@ -10,6 +10,7 @@ fi
 echo "Building WASM..."
 cd "$(dirname "$0")/rust"
 wasm-pack build --target web --out-dir ../pkg
+rm -f ../pkg/.gitignore
 
 echo ""
 echo "Done. Serve the root directory with any static file server, e.g.:"
