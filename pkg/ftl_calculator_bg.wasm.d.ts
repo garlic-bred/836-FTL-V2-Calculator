@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export const memory: WebAssembly.Memory;
-export const wasm_calculate: (a: number, b: number, c: number, d: number, e: number, f: number, g: number) => any;
+export const wasm_calculate: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number) => any;
 export const wasm_get_pearl_blocker: (a: number, b: number, c: number, d: number, e: number, f: number) => [number, number];
 export const wasm_simulate: (a: number, b: number, c: number, d: number, e: number, f: number) => any;
 export const __wbindgen_externrefs: WebAssembly.Table;

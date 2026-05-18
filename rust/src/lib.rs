@@ -19,10 +19,11 @@ pub fn wasm_calculate(
     max_tnt: i32,
     max_ticks: i32,
     max_distance: f64,
+    cannon_max_tnt: i32,
 ) -> JsValue {
     let pearl_pos = Vec3::new(pearl_x, data::PEARL_Y, pearl_z);
     let dest_pos = Vec3::new(dest_x, 256.0, dest_z);
-    let results = calculate(pearl_pos, dest_pos, max_tnt, max_ticks, max_distance);
+    let results = calculate(pearl_pos, dest_pos, max_tnt, max_ticks, max_distance, cannon_max_tnt);
     serde_wasm_bindgen::to_value(&results).unwrap_or(JsValue::NULL)
 }
 

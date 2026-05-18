@@ -148,6 +148,61 @@ h1 {
   border-color: var(--accent-dim);
 }
 
+.form-row select,
+.form-row select::picker(select) {
+  appearance: base-select;
+}
+
+.form-row select {
+  background: var(--surface-raised);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  font-size: 13px;
+  padding: 4px 8px;
+  width: 140px;
+  outline: none;
+  transition: border-color 0.15s;
+  cursor: pointer;
+}
+
+.form-row select:focus,
+.form-row select:open {
+  border-color: var(--accent-dim);
+}
+
+.form-row select::picker-icon {
+  color: var(--text-dim);
+}
+
+.form-row select::picker(select) {
+  background: var(--surface-raised);
+  border: 1px solid var(--accent-dim);
+  border-radius: 4px;
+  padding: 2px 0;
+}
+
+.form-row select option {
+  background: var(--surface-raised);
+  color: var(--text);
+  font-size: 13px;
+  padding: 4px 8px;
+}
+
+.form-row select option:hover,
+.form-row select option:focus {
+  background: var(--surface);
+}
+
+.form-row select option:checked {
+  background: var(--selected-bg);
+  color: var(--accent);
+}
+
+.form-row select option::checkmark {
+  display: none;
+}
+
 /* Hide number input spinners */
 .form-row input[type="number"]::-webkit-inner-spin-button,
 .form-row input[type="number"]::-webkit-outer-spin-button {

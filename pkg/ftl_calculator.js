@@ -8,10 +8,11 @@
  * @param {number} max_tnt
  * @param {number} max_ticks
  * @param {number} max_distance
+ * @param {number} cannon_max_tnt
  * @returns {any}
  */
-export function wasm_calculate(pearl_x, pearl_z, dest_x, dest_z, max_tnt, max_ticks, max_distance) {
-    const ret = wasm.wasm_calculate(pearl_x, pearl_z, dest_x, dest_z, max_tnt, max_ticks, max_distance);
+export function wasm_calculate(pearl_x, pearl_z, dest_x, dest_z, max_tnt, max_ticks, max_distance, cannon_max_tnt) {
+    const ret = wasm.wasm_calculate(pearl_x, pearl_z, dest_x, dest_z, max_tnt, max_ticks, max_distance, cannon_max_tnt);
     return ret;
 }
 

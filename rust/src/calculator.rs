@@ -300,6 +300,7 @@ pub fn calculate(
     max_tnt: i32,
     max_ticks: i32,
     max_distance: f64,
+    cannon_max_tnt: i32,
 ) -> Vec<CalculationResult> {
     let mut results: Vec<CalculationResult> = Vec::new();
 
@@ -358,7 +359,8 @@ pub fn calculate(
                 }
 
                 // Python: (earlyTnt // 11 + lateTnt // 11 > MAX_VARIABLE_TNT // 11)
-                if ea / 11 + lb / 11 > data::MAX_VARIABLE_TNT / 11 {
+                let max_variable_tnt = cannon_max_tnt - 22;
+                if ea / 11 + lb / 11 > max_variable_tnt / 11 {
                     continue;
                 }
 
@@ -395,6 +397,7 @@ pub fn calculate(
                     dir.direction,
                     dir.angle,
                     &blocker.as_int(),
+                    cannon_max_tnt,
                 );
 
                 results.push(CalculationResult {

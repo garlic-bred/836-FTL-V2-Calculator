@@ -1,7 +1,5 @@
 // Matches Python Encoding.py
 
-use crate::data;
-
 fn calculate_bits(tnt: i32) -> (i32, i32, i32) {
     let big = tnt / 418;
     let tnt = tnt % 418;
@@ -75,14 +73,16 @@ pub fn compute_encoding(
     direction: i32,
     direction_angle: i32,
     block: &str,
+    cannon_max_tnt: i32,
 ) -> String {
     let (blue, purple) = calculate_upaccel_bits(upaccel_tnt);
     let yellow = direction + if long_range { 8 } else { 0 };
     let purple2 = direction_angle;
 
-    let half = data::MAX_TNT / 2;
+    let half = cannon_max_tnt / 2;
+    let max_variable_tnt = cannon_max_tnt - 22;
 
-    // Normal FTL encoding: both sides within MAX_TNT/2
+    // Normal FTL encoding: both sides within cannon_max_tnt/2
     if early_tnt <= half && late_tnt <= half {
         let (red, orange, pink) = calculate_bits(early_tnt);
         let (light_blue, lime, cyan) = calculate_bits(late_tnt);
@@ -95,7 +95,7 @@ pub fn compute_encoding(
         let magenta = 1;
         let red_tnt_in_use = (early_tnt / 11) * 11;
         let (red, orange, pink) = calculate_bits(early_tnt);
-        let (light_blue, lime, cyan) = calculate_bits(late_tnt - (data::MAX_VARIABLE_TNT / 2 - red_tnt_in_use));
+        let (light_blue, lime, cyan) = calculate_bits(late_tnt - (max_variable_tnt / 2 - red_tnt_in_use));
         return format_encoding(purple, blue, cyan, light_blue, lime, yellow, orange, red, pink, magenta, purple2, block);
     }
 
@@ -106,7 +106,7 @@ pub fn compute_encoding(
         let blue_tnt_single = late_tnt % 11;
         let early_adj = early_tnt - red_tnt_single;
         let late_adj = late_tnt - blue_tnt_single;
-        let red_tnt = data::MAX_VARIABLE_TNT / 2 - late_adj;
+        let red_tnt = max_variable_tnt / 2 - late_adj;
         let blue_tnt = early_adj - red_tnt;
         let (red, orange, pink) = calculate_bits(red_tnt + red_tnt_single);
         let (light_blue, lime, cyan) = calculate_bits(blue_tnt + blue_tnt_single);

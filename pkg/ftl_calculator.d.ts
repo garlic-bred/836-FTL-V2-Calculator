@@ -1,7 +1,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export function wasm_calculate(pearl_x: number, pearl_z: number, dest_x: number, dest_z: number, max_tnt: number, max_ticks: number, max_distance: number): any;
+export function wasm_calculate(pearl_x: number, pearl_z: number, dest_x: number, dest_z: number, max_tnt: number, max_ticks: number, max_distance: number, cannon_max_tnt: number): any;
 
 export function wasm_get_pearl_blocker(pos_x: number, pos_y: number, pos_z: number, mot_x: number, mot_y: number, mot_z: number): string;
 
@@ -11,7 +11,7 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 
 export interface InitOutput {
     readonly memory: WebAssembly.Memory;
-    readonly wasm_calculate: (a: number, b: number, c: number, d: number, e: number, f: number, g: number) => any;
+    readonly wasm_calculate: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number) => any;
     readonly wasm_get_pearl_blocker: (a: number, b: number, c: number, d: number, e: number, f: number) => [number, number];
     readonly wasm_simulate: (a: number, b: number, c: number, d: number, e: number, f: number) => any;
     readonly __wbindgen_externrefs: WebAssembly.Table;

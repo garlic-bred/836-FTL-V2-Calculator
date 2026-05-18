@@ -39,11 +39,12 @@ document.getElementById("btn-calculate").addEventListener("click", () => {
   const pearlZ    = parseFloat(document.getElementById("pearl-z").value);
   const destX     = parseFloat(document.getElementById("dest-x").value);
   const destZ     = parseFloat(document.getElementById("dest-z").value);
-  const maxTnt    = parseInt(document.getElementById("max-tnt").value, 10);
-  const maxTicks  = parseInt(document.getElementById("max-ticks").value, 10);
-  const maxDist   = parseFloat(document.getElementById("max-distance").value);
+  const maxTnt       = parseInt(document.getElementById("max-tnt").value, 10);
+  const maxTicks     = parseInt(document.getElementById("max-ticks").value, 10);
+  const maxDist      = parseFloat(document.getElementById("max-distance").value);
+  const cannonMaxTnt = parseInt(document.getElementById("cannon-size").value, 10);
 
-  if ([pearlX, pearlZ, destX, destZ, maxTnt, maxTicks, maxDist].some(isNaN)) {
+  if ([pearlX, pearlZ, destX, destZ, maxTnt, maxTicks, maxDist, cannonMaxTnt].some(isNaN)) {
     setStatus("calc-status", "Invalid input — all fields are required.", true);
     return;
   }
@@ -56,7 +57,7 @@ document.getElementById("btn-calculate").addEventListener("click", () => {
   // Run WASM (synchronous — happens in microseconds to a few seconds)
   let results;
   try {
-    results = wasm_calculate(pearlX, pearlZ, destX, destZ, maxTnt, maxTicks, maxDist);
+    results = wasm_calculate(pearlX, pearlZ, destX, destZ, maxTnt, maxTicks, maxDist, cannonMaxTnt);
   } catch (e) {
     setStatus("calc-status", `Error: ${e}`, true);
     return;
