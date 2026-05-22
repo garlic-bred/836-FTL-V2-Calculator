@@ -35,8 +35,8 @@ function setStatus(id, msg, isError = false) {
 let calcResults = []; // store full result objects for row selection
 
 document.getElementById("btn-calculate").addEventListener("click", () => {
-  const pearlX    = parseFloat(document.getElementById("pearl-x").value);
-  const pearlZ    = parseFloat(document.getElementById("pearl-z").value);
+  const pearlX    = Math.floor(parseFloat(document.getElementById("pearl-x").value)) + 0.51;
+  const pearlZ    = Math.floor(parseFloat(document.getElementById("pearl-z").value)) + 0.51;
   const destX     = parseFloat(document.getElementById("dest-x").value);
   const destZ     = parseFloat(document.getElementById("dest-z").value);
   const maxTnt       = parseInt(document.getElementById("max-tnt").value, 10);
