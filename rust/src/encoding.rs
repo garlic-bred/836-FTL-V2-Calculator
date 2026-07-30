@@ -1,5 +1,3 @@
-// Matches Python Encoding.py
-
 fn calculate_bits(tnt: i32) -> (i32, i32, i32) {
     let big = tnt / 418;
     let tnt = tnt % 418;
@@ -12,7 +10,6 @@ fn calculate_upaccel_bits(tnt: i32) -> (i32, i32) {
     (tnt / 8, tnt % 8)
 }
 
-// Matches Python binary() — outputs '1'/'0' chars based on greedy subtraction
 fn binary(mut n: i32, values: &[i32]) -> String {
     values
         .iter()
@@ -31,7 +28,6 @@ fn rev(s: String) -> String {
     s.chars().rev().collect()
 }
 
-// Matches Python EncodingData.__str__()
 fn format_encoding(
     purple: i32,
     blue: i32,
@@ -63,7 +59,6 @@ fn format_encoding(
     )
 }
 
-// Matches Python calculateEncoding()
 // Returns empty string if the encoding path is not handled (shouldn't happen in practice)
 pub fn compute_encoding(
     early_tnt: i32,

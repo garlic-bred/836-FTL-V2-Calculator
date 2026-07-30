@@ -12,13 +12,9 @@ impl Pearl {
         Pearl { pos, motion }
     }
 
-    // Matches Python Pearl.tick():
-    //   motion += (0, -0.03, 0)
-    //   motion *= float32(0.99)   <- f32 precision multiply
-    //   pos += motion
     pub fn tick(&mut self) {
         self.motion = self.motion.add(Vec3::new(0.0, -0.03, 0.0));
-        self.motion = self.motion.multiply(data::PEARL_DECAY);
+        self.motion = self.motion.multiply(data::PEARL_DRAG);
         self.pos = self.pos.add(self.motion);
     }
 }
@@ -34,20 +30,12 @@ impl Tnt {
         Tnt { pos, motion }
     }
 
-    // Matches Python Tnt.tick():
-    //   motion += (0, -0.04, 0)
-    //   pos += motion
-    //   motion *= 0.98            <- pure f64
     pub fn tick(&mut self) {
         self.motion = self.motion.add(Vec3::new(0.0, -0.04, 0.0));
         self.pos = self.pos.add(self.motion);
         self.motion = self.motion.multiply(0.98);
     }
 
-    // Matches Python Tnt.calculateVelocityFromExplosion()
-    // exposure: already converted from float32 by caller
-    // is_tnt: True  → use entityPos.y directly
-    //         False → use entityPos.y + eyeHeight
     pub fn calc_velocity_from_explosion(
         self,
         entity_pos: Vec3,
@@ -56,7 +44,6 @@ impl Tnt {
         is_tnt: bool,
     ) -> Vec3 {
         let explosion_pos = self.pos.add(Vec3::new(0.0, data::EXPLOSION_HEIGHT, 0.0));
-        // float32(8.0) == exactly 8.0, so no precision difference
         let dist_norm = explosion_pos.distance_to(entity_pos) / 8.0;
         if dist_norm > 1.0 {
             return Vec3::zero();

@@ -41,7 +41,6 @@ impl Vec3 {
         format!("({:.3}, {:.3}, {:.3})", self.x, self.y, self.z)
     }
 
-    // Returns "x y z" with values truncated to integer (matching Python's int())
     pub fn as_int(self) -> String {
         format!("{} {} {}", self.x as i64, self.y as i64, self.z as i64)
     }

@@ -21,7 +21,6 @@ impl Direction {
     pub const EAST_SOUTH_EAST: i32 = 6;
     pub const WEST_SOUTH_WEST: i32 = 7;
 
-    // Matches Python Direction.calculateDirection()
     pub fn calculate(vec: Vec3) -> Self {
         let cos45 = (45.0_f64).to_radians().cos();
         let sin45 = (45.0_f64).to_radians().sin();
@@ -30,7 +29,6 @@ impl Direction {
         let scale = data::NUM_OF_ANGLES as f64 / rotated_x.abs().max(rotated_z.abs());
         let angle = ((rotated_x * scale).abs().min((rotated_z * scale).abs())).floor() as i32;
 
-        // Python: math.atan2(vec.z, vec.x) — standard (y, x) atan2 with z as y-axis
         let mut vec_angle = vec.z.atan2(vec.x).to_degrees();
         if vec_angle < 0.0 {
             vec_angle += 360.0;
@@ -69,8 +67,6 @@ pub struct PearlSimulation {
 }
 
 impl PearlSimulation {
-    // Matches Python PearlSimulation.__init__()
-    // initial_motion: Vec3(0, PEARL_Y_MOTION, 0) + earlyVec*ea + lateVec*lb
     pub fn new(
         pos: Vec3,
         initial_motion: Vec3,
@@ -78,7 +74,6 @@ impl PearlSimulation {
         upaccel_tnt: i32,
         long_range: bool,
     ) -> Self {
-        // Python: self.longRange = longRange and upaccelTnt > 0
         let long_range = long_range && upaccel_tnt > 0;
 
         let tnt_y = if long_range {
@@ -87,7 +82,6 @@ impl PearlSimulation {
             data::UPACCEL_TNT_Y
         };
 
-        // Python: tnt = Tnt(Vec3(pos.x - PEARL_HORIZONTAL_OFFSET, tnt_y, pos.z - PEARL_HORIZONTAL_OFFSET), Vec3(0,0,0))
         let tnt = Tnt::new(
             Vec3::new(
                 pos.x - data::PEARL_HORIZONTAL_OFFSET,
@@ -97,7 +91,6 @@ impl PearlSimulation {
             Vec3::zero(),
         );
 
-        // exposure = float32(1.0) = exactly 1.0
         let upaccel_vel = tnt
             .calc_velocity_from_explosion(pos, data::PEARL_EYE_HEIGHT, 1.0, false)
             .multiply(upaccel_tnt as f64);
@@ -118,7 +111,6 @@ impl PearlSimulation {
 
 // ─── TNT vectors ─────────────────────────────────────────────────────────────
 
-// Matches Python calculateTntVectors()
 // Returns (early_tnt_vector, late_tnt_vector)
 fn calculate_tnt_vectors(dist: Vec3, dir: &Direction) -> (Vec3, Vec3) {
     // Determine alignment TNT positions based on destination direction
@@ -151,9 +143,7 @@ fn calculate_tnt_vectors(dist: Vec3, dir: &Direction) -> (Vec3, Vec3) {
     let mut late_tnt =
         Tnt::new(Vec3::new(0.0, data::BASKET_TNT_Y, 0.0), Vec3::new(0.0, data::BASKET_TNT_Y_MOTION, 0.0));
 
-    // exposure for alignment TNTs: float32(1.0/27.0)
-    // Python: float32(1.0/27.0) = float32(Python float division) = (1.0_f64/27.0_f64) as f32 as f64
-    // Since 1.0 and 27.0 are exact in f32, this equals (1.0_f32/27.0_f32) as f64
+    // f32 cast to match game engine's single-precision float behavior
     let align_exposure = (1.0_f32 / 27.0_f32) as f64;
     let num_angles = data::NUM_OF_ANGLES as f64;
 
@@ -177,7 +167,7 @@ fn calculate_tnt_vectors(dist: Vec3, dir: &Direction) -> (Vec3, Vec3) {
         );
 
     // Late TNT: angle multiplier = direction.angle + 1
-    // NOTE: basket upaccel uses early_tnt.pos, not late_tnt.pos (matches Python)
+    // NOTE: basket upaccel uses early_tnt.pos, not late_tnt.pos
     let early_pos_for_basket = early_tnt.pos;
     late_tnt.motion = late_tnt
         .motion
@@ -217,7 +207,6 @@ fn calculate_tnt_vectors(dist: Vec3, dir: &Direction) -> (Vec3, Vec3) {
 
 // ─── calculatePossibleTicks ──────────────────────────────────────────────────
 
-// Matches Python calculatePossibleTicks()
 fn calculate_possible_ticks(upaccel_tnt_y: f64) -> Vec<i32> {
     let pearl_pos = Vec3::new(
         data::PEARL_HORIZONTAL_OFFSET,
@@ -246,11 +235,9 @@ fn calculate_possible_ticks(upaccel_tnt_y: f64) -> Vec<i32> {
 
 // ─── getPearlBlocker ─────────────────────────────────────────────────────────
 
-// Matches Python getPearlBlocker()
 pub fn get_pearl_blocker(pearl: Pearl) -> Vec3 {
     let pos = pearl.pos;
-    // Compute what the next motion would be
-    let motion = pearl.motion.add(Vec3::new(0.0, -0.03, 0.0)).multiply(data::PEARL_DECAY);
+    let motion = pearl.motion.add(Vec3::new(0.0, -0.03, 0.0)).multiply(data::PEARL_DRAG);
 
     if motion.y >= 0.0 || pos.y < data::PEARL_STOP_HEIGHT {
         return Vec3::zero();
@@ -293,7 +280,6 @@ pub struct SimTick {
 
 // ─── calculate ───────────────────────────────────────────────────────────────
 
-// Matches Python Calculator.calculate()
 pub fn calculate(
     pearl_pos: Vec3,
     dest_pos: Vec3,
@@ -323,10 +309,8 @@ pub fn calculate(
     let mut long_range = false;
     let mut try_again = false;
 
-    // Decay constant: float(float32(0.99)) raised to power tick
-    // Python: divider += pow(float(float32(0.99)), tick)
     for tick in 1..=max_ticks {
-        divider += data::PEARL_DECAY.powi(tick);
+        divider += data::PEARL_DRAG.powi(tick);
 
         match possible_ticks.iter().position(|&t| t == tick) {
             Some(idx) => {
@@ -358,7 +342,6 @@ pub fn calculate(
                     continue;
                 }
 
-                // Python: (earlyTnt // 11 + lateTnt // 11 > MAX_VARIABLE_TNT // 11)
                 let max_variable_tnt = cannon_max_tnt - 22;
                 if ea / 11 + lb / 11 > max_variable_tnt / 11 {
                     continue;
@@ -424,7 +407,6 @@ pub fn calculate(
 
 // ─── simulate ────────────────────────────────────────────────────────────────
 
-// Matches Python simulateButtonPressed() simulation loop
 pub fn simulate(pos: Vec3, motion: Vec3) -> Vec<SimTick> {
     let mut ticks = Vec::new();
     let mut pearl = Pearl::new(pos, motion);
