@@ -77,9 +77,9 @@ impl PearlSimulation {
         let long_range = long_range && upaccel_tnt > 0;
 
         let tnt_y = if long_range {
-            data::UPACCEL_TNT_LONGRANGE_Y
+            compute_upaccel_tnt_y(data::UPACCEL_TNT_LONGRANGE_START_Y)
         } else {
-            data::UPACCEL_TNT_Y
+            compute_upaccel_tnt_y(data::UPACCEL_TNT_START_Y)
         };
 
         let tnt = Tnt::new(
@@ -205,6 +205,22 @@ fn calculate_tnt_vectors(dist: Vec3, dir: &Direction) -> (Vec3, Vec3) {
     (early_vec, late_vec)
 }
 
+// ─── compute upaccel TNT explosion y ─────────────────────────────────────────
+
+fn compute_upaccel_tnt_y(start_y: f64) -> f64 {
+    let mut tnt = Tnt::new(Vec3::new(0.0, start_y, 0.0), Vec3::zero());
+    for _ in 0..15 {
+        tnt.tick();
+    }
+    let basket_tnt = Tnt::new(Vec3::new(0.0, data::BASKET_UPACCEL_TNT_Y, 0.0), Vec3::zero());
+    let vel = basket_tnt
+        .calc_velocity_from_explosion(tnt.pos, 0.0, 1.0, true)
+        .multiply(data::BASKET_UPACCEL_TNT as f64);
+    tnt.motion = tnt.motion.add(vel);
+    tnt.tick();
+    tnt.pos.y
+}
+
 // ─── calculatePossibleTicks ──────────────────────────────────────────────────
 
 fn calculate_possible_ticks(upaccel_tnt_y: f64) -> Vec<i32> {
@@ -291,8 +307,8 @@ pub fn calculate(
     let mut results: Vec<CalculationResult> = Vec::new();
 
     // possibleTicks = calculatePossibleTicks(LONGRANGE) + calculatePossibleTicks(NORMAL)
-    let mut possible_ticks = calculate_possible_ticks(data::UPACCEL_TNT_LONGRANGE_Y);
-    possible_ticks.extend(calculate_possible_ticks(data::UPACCEL_TNT_Y));
+    let mut possible_ticks = calculate_possible_ticks(compute_upaccel_tnt_y(data::UPACCEL_TNT_LONGRANGE_START_Y));
+    possible_ticks.extend(calculate_possible_ticks(compute_upaccel_tnt_y(data::UPACCEL_TNT_START_Y)));
 
     let mut divider = 0.0_f64;
     let distance_exact = dest_pos.add(pearl_pos.multiply(-1.0));

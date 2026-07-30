@@ -20,7 +20,13 @@ pub fn wasm_calculate(
     max_ticks: i32,
     max_distance: f64,
     cannon_max_tnt: i32,
+    version: &str,
 ) -> JsValue {
+    let v = match version {
+        "26_2" => data::Version::V26_2,
+        _ => data::Version::V1_21_2,
+    };
+    data::set_version(v);
     let pearl_pos = Vec3::new(pearl_x, data::PEARL_Y, pearl_z);
     let dest_pos = Vec3::new(dest_x, 256.0, dest_z);
     let results = calculate(pearl_pos, dest_pos, max_tnt, max_ticks, max_distance, cannon_max_tnt);

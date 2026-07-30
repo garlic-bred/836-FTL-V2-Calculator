@@ -33,7 +33,8 @@ impl Tnt {
     pub fn tick(&mut self) {
         self.motion = self.motion.add(Vec3::new(0.0, -0.04, 0.0));
         self.pos = self.pos.add(self.motion);
-        self.motion = self.motion.multiply(0.98);
+        let drag = if data::get_version() == data::Version::V1_21_2 { 0.98 } else { 0.98_f32 as f64 };
+        self.motion = self.motion.multiply(drag);
     }
 
     pub fn calc_velocity_from_explosion(
