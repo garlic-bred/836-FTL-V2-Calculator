@@ -11,9 +11,7 @@ pub const PEARL_EYE_HEIGHT: f64 = 0.25 * (0.85_f32 as f64);
 
 pub const EXPLOSION_HEIGHT: f64 = (0.98_f32 as f64) * (0.0625_f32 as f64);
 
-pub const BASKET_TNT_Y: f64 = 173.875 - (0.98_f32 as f64) - 0.04;
-
-pub const BASKET_TNT_Y_MOTION: f64 = -0.04 * 0.98;
+pub const BASKET_TNT_Y: f64 = 173.875 - (0.98_f32 as f64);
 
 pub const BASKET_UPACCEL_TNT: i32 = 159;
 pub const BASKET_UPACCEL_TNT_Y: f64 = 169.0;

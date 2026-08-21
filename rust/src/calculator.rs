@@ -139,9 +139,11 @@ fn calculate_tnt_vectors(dist: Vec3, dir: &Direction) -> (Vec3, Vec3) {
 
     // Both early and late TNT start at same basket position/motion
     let mut early_tnt =
-        Tnt::new(Vec3::new(0.0, data::BASKET_TNT_Y, 0.0), Vec3::new(0.0, data::BASKET_TNT_Y_MOTION, 0.0));
+        Tnt::new(Vec3::new(0.0, data::BASKET_TNT_Y, 0.0), Vec3::zero());
     let mut late_tnt =
-        Tnt::new(Vec3::new(0.0, data::BASKET_TNT_Y, 0.0), Vec3::new(0.0, data::BASKET_TNT_Y_MOTION, 0.0));
+        Tnt::new(Vec3::new(0.0, data::BASKET_TNT_Y, 0.0), Vec3::zero());
+    early_tnt.tick();
+    late_tnt.tick();
 
     // f32 cast to match game engine's single-precision float behavior
     let align_exposure = (1.0_f32 / 27.0_f32) as f64;
